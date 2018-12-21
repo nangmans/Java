@@ -1,10 +1,10 @@
-package java;
+package HelloJava;
 
-public class HelloGIt {
+public class HelloJava {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-System.out.print("Hello git");
-	}
+System.out.print("Hello Java");
+}
 
 }
