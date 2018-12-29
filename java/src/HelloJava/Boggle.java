@@ -9,16 +9,16 @@ public class Boggle {
 	
 	public static char [][] Board = new char [5][5];	 // boggle 게임판의 크기 5*5
 
-	public static Scanner sc = new Scanner(System.in);
+public static Scanner sc = new Scanner(System.in);
 	
-	public static String Word = sc.nextLine(); //찾을 단어                  //nextLine은 엔터가 들어가기 전까지의 입력을 받음
+	
     
 	
-	static int FindX = sc.nextInt(); //시작위치 x좌표            //nextInt는 띄어쓰기,엔터 전까지의 입력을 받음
-	static int FindY = sc.nextInt(); //시작위치 y좌표
 	
 	
 	public static void main(String [] args) { //main함수 시작 -> 여기서 최종값 출력
+		
+		
 		
 		for(int i =0 ; i<5 ; i++) {  // 입력받는 5*5 게임판          // next는 띄어쓰기 전까지의 입력을 받음
 			for(int j =0; j<5 ; j++) {
@@ -27,6 +27,10 @@ public class Boggle {
 			
 			}
 		}		
+		String Word = sc.nextLine(); //찾을 단어                  //nextLine은 엔터가 들어가기 전까지의 입력을 받음
+		
+		int FindX = sc.nextInt(); //시작위치 x좌표            //nextInt는 띄어쓰기,엔터 전까지의 입력을 받음
+		int FindY = sc.nextInt(); //시작위치 y좌표
 		
 		System.out.println(HasWord(FindX,FindY,Word)); //최종 출력
 		
