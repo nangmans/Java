@@ -24,23 +24,27 @@ class randomArray { //1부터 100까지 랜덤한 숫자가 들어있는 배열을 만드는 클래스
 		}
 	}	
 }
+
 class bubbleSort { //bubble sort를 구현하는 클래스, 배열 내에서 반복 도중 한번도 값이 바뀌지 않은 경우는 이미 정렬된 경우이므로 무의미한 반복을 피하기 위해 sorted 함수가 true로 유지될 경우 바로 배열을 리턴하도록 했다.
 	
 	public int[] sort(int array[], int n) {
 		
-		for(int i=0; i<array.length;i++) {
+		
+		
+		for(int i=0; i<array.length ;i++) {
 			boolean sorted = true;
-			for(int j=0; j<array.length-(i+1);i++) {
+			for(int j=0; j<array.length-(i+1);j++) {
 				if(array[j]>array[j+1]) {
-					int temp;
-					temp=array[j+1];
+					
+					int temp=array[j+1];
 					array[j+1]=array[j];
 					array[j]=temp;
 					sorted = false;
-				}
-				if(sorted=true) return array;
+				}			
 			}
+			if(sorted==true) return array;
 		}
+		
 		return array;		
 	}
 	
@@ -57,17 +61,20 @@ class insertionSort { //insertion sort를 구현하는 클래스, 배열의 2번째 요소를 it
 	
 	public int[] sort(int array[], int n) {
 		
+		
+		
 		for(int i=1; i<array.length; i++) {
 			int loc = i-1;
 			int item = array[i];
-			while(array[loc]>item && loc>=0) {
+			while(loc>=0 && array[loc]>item  ) { // loc>=0 && array[loc]>item 와  array[loc]>item && loc>=0 의 값이 다르다.
 				array[loc+1]=array[loc];
 				loc--;
 			}
 			array[loc+1]=item;
 		
 		}
-		return array;
+		
+		return array;	
 	}
 	public void printList(int array[]) {
 		for(int i=0; i<array.length; i++) {
@@ -81,13 +88,16 @@ class selectionSort { //selection sort를 구현하는 클래스, 배열 내에서 큰 값을 구
 	
 	public int[] sort(int array[], int n) {
 		
+		
+		
 		for(int i = n-1 ; i>=0 ; i--) {
 			int temp = array[i];
 			array[i]=array[largest(array,i)];
 			array[largest(array,i)]=temp;
 			
 		}
-		return array;	
+		
+		return array;		
 	}
 	
 	
@@ -112,9 +122,16 @@ class selectionSort { //selection sort를 구현하는 클래스, 배열 내에서 큰 값을 구
 	}	
 }
 
+
 		
 
 public class Sort {
+	
+	static void initial(int [] array1,int [] array2) { //배열끼리 값의 복사를 위해 만든 함수
+		for(int i=0; i<array1.length; i++) {
+			array1[i]=array2[i];
+		}
+	}
 
 	public static void main(String[] args) {
 		
@@ -127,7 +144,10 @@ public class Sort {
 		insertionSort I = new insertionSort();
 		
 		
-		int randArray[] = R.array(); //intArray에 R의 난수배열값을 넣어준다
+		
+		final int randArray[] = R.array(); //이 식은 배열값을 넣어주는 것이 아닌 단순히 배열의 주소값만 복사하는 식이다. 배열의 값을 복사하려면 위의 initial함수를 통해서 가능하다.
+	
+		
 		
 //		for(int i=0; i<100 ; i++) {
 //			System.out.print(randArray[i]); //for문을 통해 intArray를 출력
@@ -139,25 +159,47 @@ public class Sort {
 		
 		System.out.println(" ");
 		
-		long Ss = System.nanoTime();	 //nanoTime()은 코드수행시 소요되는 시간을 ns(나노초) 단위로 측정하게 해준다.
-		S.sort(randArray, 100);
-		long Es = System.nanoTime();
-		System.out.println("SelectionSort = "+(Es-Ss)/1000.00000+"ns");
-	
-					
+		
+		
+		initial(randArray,R.array());//위에서 이미 정렬된 randArray를 initial없이 다시 정렬하게되면 이미 정렬된 배열을 다시 정렬하는 것이 되버리므로, 다른 정렬 시행 전에 다시 최초의 난수배열값을 넣어준다.
+		long Si = System.nanoTime();
+		I.sort(randArray,100);
+		long Ei = System.nanoTime();
+		System.out.println("InsertionSort = "+(Ei-Si)/1000.00000+"ns");	
+		
+		initial(randArray,R.array()); //정렬이 시행되기 전에 randArray배열을 최초의 난수 배열인 R.array값을 넣어주는 과정을 거쳐야 한다. 
 		long Sb = System.nanoTime();
 		B.sort(randArray,100);
 		long Eb = System.nanoTime();
 		System.out.println("BubbleSort = "+(Eb-Sb)/1000.00000+"ns");
+				
 		
-		long Si = System.nanoTime();
-		I.sort(randArray,100);
-		long Ei = System.nanoTime();
-		System.out.println("InsertionSort = "+(Ei-Si)/1000.00000+"ns");
+				
+		initial(randArray,R.array());
+		long Ss = System.nanoTime();	 //nanoTime()은 코드수행시 소요되는 시간을 ns(나노초) 단위로 측정하게 해준다.
+		S.sort(randArray, 100);
+		long Es = System.nanoTime();
+		System.out.println("SelectionSort = "+(Es-Ss)/1000.00000+"ns");
+		
+
 		
 		
 		
 		
+		
+		
+		
+		
+		
+		
+		
+	
+		
+		
+		
+		
+		
+	
 	}
 
 }
