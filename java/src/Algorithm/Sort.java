@@ -1,6 +1,8 @@
 package Algorithm;
 
 
+	
+
 
 
 class randomArray { //1부터 100까지 랜덤한 숫자가 들어있는 배열을 만드는 클래스
@@ -23,6 +25,115 @@ class randomArray { //1부터 100까지 랜덤한 숫자가 들어있는 배열을 만드는 클래스
 			System.out.print(" ");
 		}
 	}	
+}
+class quickSort {
+	
+	public int [] sort(int array[],int s, int e) {
+		
+		if(s<e) {
+			int p = partition(array,s,e);
+			sort(array,s,p-1);
+			sort(array,p+1,e);
+		}
+		
+		return array;
+	}
+	
+	public int partition(int array[],int s,int e) {
+		
+		int pivot = array[e];
+		int i = s-1; //pivot 값보다 작은 값이 없을 경우를 대비해 i를 s-1로 둔다.
+		int temp;
+		
+		for(int j = s; j<=e-1; j++ ) {
+			if(pivot>=array[j]) {
+			i++;
+			temp=array[j];
+			array[j]=array[i];
+			array[i]=temp;
+			}
+		}
+		
+		temp = array[e];
+		array[e] = array[i+1];
+		array[i+1]=temp;
+				
+		return i+1;
+	}
+	public void printList(int array[]) {
+		for(int i=0; i<array.length; i++) {
+			System.out.print(array[i]);
+			System.out.print(" ");
+		}
+	}
+}
+
+class mergeSort {
+	
+	
+	
+	public int [] sort(int array[],int s,int e) {
+		
+		if(s<e) {
+			int h = (s+e)/2;
+			sort(array,s,h);
+			sort(array,h+1,e);
+			merge(array,s,h,e);
+		}
+		return array;
+	}
+	
+	public int [] merge(int array[],int s, int h ,int e) {
+		
+		int [] temp = new int [array.length];
+		
+		int i = s;
+		int j = h+1;
+		int t = 0;
+		while(i<=h && j<=e) {
+			if(array[i]<array[j]) {
+				temp[t]=array[i];
+				i++;
+				t++;
+			}
+				else {
+					temp[t]=array[j];
+					j++;
+					t++;
+				}
+			
+			}
+		
+		
+		while(i<=h) {
+			temp[t]=array[i];
+			t++;
+			i++;
+		}
+		
+		while(j<=e) {
+			temp[t]=array[j];
+			t++;
+			j++;
+		}
+		i=s;
+		t=0;
+		while(i<=e) {
+			array[i]=temp[t];
+			i++;
+			t++;		
+		}
+		
+		return array;
+	}
+	
+	public void printList(int array[]) {
+		for(int i=0; i<array.length; i++) {
+			System.out.print(array[i]);
+			System.out.print(" ");
+		}
+	}
+	
 }
 
 class bubbleSort { //bubble sort를 구현하는 클래스, 배열 내에서 반복 도중 한번도 값이 바뀌지 않은 경우는 이미 정렬된 경우이므로 무의미한 반복을 피하기 위해 sorted 함수가 true로 유지될 경우 바로 배열을 리턴하도록 했다.
@@ -143,11 +254,13 @@ public class Sort {
 		
 		insertionSort I = new insertionSort();
 		
+		mergeSort M = new mergeSort();
 		
+		quickSort Q = new quickSort();
 		
-		final int randArray[] = R.array(); //이 식은 배열값을 넣어주는 것이 아닌 단순히 배열의 주소값만 복사하는 식이다. 배열의 값을 복사하려면 위의 initial함수를 통해서 가능하다.
+		int randArray[]= new int [100]; //랜덤한 배열을 담을 randArray를 생성한다.
 	
-		
+		int [] random = R.array(); //함수 random에 무작위로 생성된 수들의 배열인 R.array를 지정한다. 최초의 난수배열.
 		
 //		for(int i=0; i<100 ; i++) {
 //			System.out.print(randArray[i]); //for문을 통해 intArray를 출력
@@ -155,33 +268,60 @@ public class Sort {
 //			}
 //				
 //		System.out.println(" ");
+		initial(randArray,random); 
+		
 		R.printList(randArray);
 		
 		System.out.println(" ");
 		
 		
 		
-		initial(randArray,R.array());//위에서 이미 정렬된 randArray를 initial없이 다시 정렬하게되면 이미 정렬된 배열을 다시 정렬하는 것이 되버리므로, 다른 정렬 시행 전에 다시 최초의 난수배열값을 넣어준다.
+		initial(randArray,random);//위에서 이미 정렬된 randArray를 initial없이 다시 정렬하게되면 이미 정렬된 배열을 다시 정렬하는 것이 되버리므로, 다른 정렬 시행 전에 다시 최초의 난수배열값을 넣어준다.
 		long Si = System.nanoTime();
 		I.sort(randArray,100);
 		long Ei = System.nanoTime();
 		System.out.println("InsertionSort = "+(Ei-Si)/1000.00000+"ns");	
 		
-		initial(randArray,R.array()); //정렬이 시행되기 전에 randArray배열을 최초의 난수 배열인 R.array값을 넣어주는 과정을 거쳐야 한다. 
+	
+		
+		System.out.println(" ");
+		
+		initial(randArray,random); //정렬이 시행되기 전에 randArray배열을 최초의 난수 배열인 R.array값을 넣어주는 과정을 거쳐야 한다. 
 		long Sb = System.nanoTime();
 		B.sort(randArray,100);
 		long Eb = System.nanoTime();
-		System.out.println("BubbleSort = "+(Eb-Sb)/1000.00000+"ns");
-				
+		System.out.println("BubbleSort = "+(Eb-Sb)/1000.00000+"ns");	
 		
+		
+		
+		System.out.println(" ");
 				
-		initial(randArray,R.array());
+		initial(randArray,random);
 		long Ss = System.nanoTime();	 //nanoTime()은 코드수행시 소요되는 시간을 ns(나노초) 단위로 측정하게 해준다.
 		S.sort(randArray, 100);
 		long Es = System.nanoTime();
 		System.out.println("SelectionSort = "+(Es-Ss)/1000.00000+"ns");
 		
-
+		
+		
+		System.out.println(" ");
+		
+		initial(randArray,random);
+		long Sm = System.nanoTime();	
+		M.sort(randArray,0,99);
+		long Em = System.nanoTime();
+		System.out.println("MergeSort = "+(Em-Sm)/1000.00000+"ns");
+		
+		
+		System.out.println(" ");
+		
+		initial(randArray,random);
+		long Sq = System.nanoTime();	
+		Q.sort(randArray,0,99);
+		long Eq = System.nanoTime();
+		System.out.println("QuickSort = "+(Eq-Sq)/1000.00000+"ns");
+	
+		
 		
 		
 		
