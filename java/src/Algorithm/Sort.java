@@ -262,12 +262,7 @@ public class Sort {
 	
 		int [] random = R.array(); //함수 random에 무작위로 생성된 수들의 배열인 R.array를 지정한다. 최초의 난수배열.
 		
-//		for(int i=0; i<100 ; i++) {
-//			System.out.print(randArray[i]); //for문을 통해 intArray를 출력
-//			System.out.print(" ");
-//			}
-//				
-//		System.out.println(" ");
+
 		initial(randArray,random); 
 		
 		R.printList(randArray);
