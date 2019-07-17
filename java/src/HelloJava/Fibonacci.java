@@ -23,6 +23,7 @@ public class Fibonacci {
 		
 		int n = sc.nextInt();
 		
+		
 		System.out.println(Fibonacci(n));
 	}//main
 
